@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="text-align: center; margin-top: 50px;">
+    <h1>Reply</h1>
+    <div class="reply-container" style="margin: 30px auto; max-width: 800px;">
+        <h2 style="color: #09edc7;">{{ reply_text }}</h2>
+        <div class="video-container" style="margin: 20px auto;">
+            <video id="replyVideo" width="600" height="350" autoplay controls>
+                <source src="{% static reply_video %}" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+        
+        <!-- Keywords Section -->
+        <div class="keywords-section" style="margin: 30px auto; padding: 20px; background-color: #f8f9fa; border-radius: 10px;">
+            <h3 style="color: #333; margin-bottom: 15px;">Keywords</h3>
+            <div class="keywords-list" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                {% for keyword in keywords %}
+                <span class="keyword" style="padding: 8px 15px; background-color: #09edc7; color: white; border-radius: 20px; font-size: 16px;">
+                    {{ keyword }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="navigation" style="margin-top: 20px;">
+            <a href="{% url 'animation' %}" class="btn" style="padding: 10px 20px; background-color: #09edc7; color: white; text-decoration: none; border-radius: 5px;">Back to Animation</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var video = document.getElementById('replyVideo');
+        video.play().catch(function(error) {
+            console.log("Error playing video:", error);
+        });
+    });
+</script>
+{% endblock %} 
