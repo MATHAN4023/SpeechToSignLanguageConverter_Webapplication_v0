@@ -14,6 +14,8 @@ from django.views.decorators.http import require_http_methods
 import json
 from .translation_service import translation_service
 import logging
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 logger = logging.getLogger(__name__)
 
@@ -264,3 +266,45 @@ def translate_text(request):
     except json.JSONDecodeError as e:
         logger.error("JSON decode error: %s", str(e))
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def api_signup(request):
+    try:
+        data = json.loads(request.body)
+        username = data.get('username')
+        email = data.get('email')
+        password = data.get('password')
+        if not username or not email or not password:
+            return JsonResponse({'error': 'Missing required fields'}, status=400)
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'error': 'Username already exists'}, status=400)
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'error': 'Email already exists'}, status=400)
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+        return JsonResponse({'success': True, 'user': {'username': user.username, 'email': user.email}})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def api_login(request):
+    try:
+        data = json.loads(request.body)
+        email = data.get('email')
+        password = data.get('password')
+        if not email or not password:
+            return JsonResponse({'error': 'Missing email or password'}, status=400)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'Invalid credentials'}, status=401)
+        user_auth = authenticate(username=user.username, password=password)
+        if user_auth is not None:
+            login(request, user_auth)
+            return JsonResponse({'success': True, 'user': {'username': user.username, 'email': user.email}})
+        else:
+            return JsonResponse({'error': 'Invalid credentials'}, status=401)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

@@ -21,6 +21,8 @@ urlpatterns = [
     path('api/translate/', views.translate_text, name='translate_text'),
     path('api/get-csrf-token/', views.get_csrf_token, name='get_csrf_token'),
     path('api/get-animation-words/', views.get_animation_words, name='get_animation_words'),
+    path('api/login', views.api_login, name='api_login'),
+    path('api/signup', views.api_signup, name='api_signup'),
     
     # Regular views
     path('', views.home_view, name='home'),
