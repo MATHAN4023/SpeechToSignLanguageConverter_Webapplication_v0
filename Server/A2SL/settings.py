@@ -15,9 +15,9 @@ nltk.download('omw-1.4')
 SECRET_KEY = '3k7=!d39#4@_&5a6to&4=_=j(c^v0(vv91cj5+9e8+d4&+01jb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # For production, restrict to your Render domain if desired
 
 # Application definition
 INSTALLED_APPS = [
