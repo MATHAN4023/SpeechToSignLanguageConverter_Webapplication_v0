@@ -66,12 +66,11 @@
 	{
 		var videoSource = new Array();
 		var	videos = document.getElementById("list").getElementsByTagName("li");
-		var staticUrl = "{% static '' %}";
+		var staticUrl = document.getElementById("list").getAttribute("data-static-url");
 		var j;
 		for(j=0;j<videos.length;j++)
 		{
 			videoSource[j] = staticUrl + videos[j].innerHTML + ".mp4";
-			console.log("Video source:", videoSource[j]);
 		}
 
 		var i = 0; // define i
@@ -81,12 +80,10 @@
 		{
 			document.getElementById("list").getElementsByTagName("li")[videoNum].style.color = "#09edc7";
 			document.getElementById("list").getElementsByTagName("li")[videoNum].style.fontSize = "xx-large";
-			var videoPlayer = document.getElementById("videoPlayer");
-			videoPlayer.setAttribute("src", videoSource[videoNum]);
-			videoPlayer.load();
-			videoPlayer.play().catch(function(error) {
-				console.log("Error playing video:", error);
-			});
+			document.getElementById("videoPlayer").setAttribute("src", videoSource[videoNum]);
+	    	document.getElementById("videoPlayer").load();
+	    	document.getElementById("videoPlayer").play();
+
 		}
 		document.getElementById('videoPlayer').addEventListener('ended', myHandler, false);
 		document.getElementById("list").getElementsByTagName("li")[0].style.color = "#09edc7";

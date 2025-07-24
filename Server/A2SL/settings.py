@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',             # For API support
     'corsheaders',                # To allow React to talk to backend
+    'A2SL',                       # Our main app
 ]
 
 MIDDLEWARE = [
@@ -96,12 +97,7 @@ USE_TZ = True
 # CORS: Allow React frontend to access Django backend
 CORS_ALLOW_ALL_ORIGINS = True  # For development only
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vite default port
-    "http://127.0.0.1:5173",
-    "http://localhost:5174",  # Alternative Vite port
-    "http://127.0.0.1:5174",
-    "http://localhost:3000",  # Create React App default port
-    "http://127.0.0.1:3000",
+    "http://localhost:5173",
 ]
 
 # Allow credentials
@@ -154,9 +150,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Add this to ensure static files are served in development
 if DEBUG:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static'),
-    ]
+    # Add this to serve static files in development
+    pass
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

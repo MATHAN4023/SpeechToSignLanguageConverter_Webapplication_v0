@@ -10,7 +10,6 @@ import logging
 import ssl
 from functools import wraps
 import time
-from urllib.parse import quote_plus
 
 # Configure logging
 logging.basicConfig(
@@ -37,35 +36,37 @@ def get_db_connection():
             if not mongodb_uri:
                 raise ValueError("MONGODB_URI environment variable is not set")
             
-            # URL encode the connection string
-            if '@' in mongodb_uri:
-                # Split the URI into parts
-                protocol = mongodb_uri.split('://')[0] + '://'
-                rest = mongodb_uri.split('://')[1]
-                auth_part = rest.split('@')[0]
-                host_part = rest.split('@')[1]
-                
-                # URL encode the username and password
-                username = quote_plus(auth_part.split(':')[0])
-                password = quote_plus(auth_part.split(':')[1])
-                
-                # Reconstruct the URI
-                mongodb_uri = f"{protocol}{username}:{password}@{host_part}"
-            
-            # Create MongoDB client with basic configuration
+            # Create MongoDB client with updated configuration
             client = MongoClient(
                 mongodb_uri,
                 tls=True,
-                tlsAllowInvalidCertificates=False,
                 tlsCAFile=certifi.where(),
-                serverSelectionTimeoutMS=30000,
-                connectTimeoutMS=30000,
-                socketTimeoutMS=30000
+                tlsAllowInvalidCertificates=False,
+                serverSelectionTimeoutMS=5000,
+                connectTimeoutMS=10000,
+                socketTimeoutMS=10000,
+                retryWrites=True,
+                retryReads=True,
+                maxPoolSize=50,
+                minPoolSize=10,
+                maxIdleTimeMS=30000,
+                waitQueueTimeoutMS=10000
             )
             
-            # Test connection
-            logger.debug("Testing connection with ping command...")
-            client.admin.command('ping')
+            # Test connection with retry logic
+            max_retries = 3
+            retry_delay = 1  # seconds
+            
+            for attempt in range(max_retries):
+                try:
+                    logger.debug(f"Testing connection with ping command (attempt {attempt + 1}/{max_retries})...")
+                    client.admin.command('ping')
+                    break
+                except Exception as e:
+                    if attempt == max_retries - 1:
+                        raise
+                    logger.warning(f"Connection attempt {attempt + 1} failed: {str(e)}")
+                    time.sleep(retry_delay)
             
             # Get database
             db = client.get_database('Cluster0')  # Specify the database name

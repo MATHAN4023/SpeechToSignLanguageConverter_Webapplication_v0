@@ -5,7 +5,7 @@ import { FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa'
 import SignIn from './components/Auth/SignIn'
 import SignUp from './components/Auth/SignUp'
 import MainScreen from './components/MainScreen'
-import ReplyPage from './components/ReplyPage'
+import ResponsePage from './components/ResponsePage'
 
 function App() {
   const [text, setText] = useState('')
@@ -180,10 +180,10 @@ function App() {
           }
         />
         <Route
-          path="/reply"
+          path="/response"
           element={
             <PrivateRoute>
-              <ReplyPage />
+              <ResponsePage />
             </PrivateRoute>
           }
         />

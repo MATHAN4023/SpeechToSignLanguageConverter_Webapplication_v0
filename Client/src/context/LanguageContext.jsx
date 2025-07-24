@@ -12,9 +12,7 @@ const translations = {
     textEntered: 'Text Entered',
     keyWords: 'Key Words',
     signLanguage: 'Sign Language',
-    animation: 'Animation',
-    translatedText: 'Translated Text',
-    sendAnotherMessage: 'Send another message'
+    animation: 'Animation'
   },
   'ta-IN': {
     welcome: 'வரவேற்கிறோம்',
@@ -27,9 +25,7 @@ const translations = {
     textEntered: 'உள்ளிடப்பட்ட உரை',
     keyWords: 'முக்கிய வார்த்தைகள்',
     signLanguage: 'சைகை மொழி',
-    animation: 'அனிமேஷன்',
-    translatedText: 'மொழிபெயர்க்கப்பட்ட உரை',
-    sendAnotherMessage: 'மற்றொரு செய்தியை அனுப்பவும்'
+    animation: 'அனிமேஷன்'
   },
   'hi-IN': {
     welcome: 'स्वागत है',
@@ -42,9 +38,7 @@ const translations = {
     textEntered: 'दर्ज किया गया पाठ',
     keyWords: 'मुख्य शब्द',
     signLanguage: 'सांकेतिक भाषा',
-    animation: 'एनिमेशन',
-    translatedText: 'अनुवादित पाठ',
-    sendAnotherMessage: 'दूसरा संदेश भेजें'
+    animation: 'एनिमेशन'
   },
   'kn-IN': {
     welcome: 'ಸ್ವಾಗತ',
@@ -57,9 +51,7 @@ const translations = {
     textEntered: 'ನಮೂದಿಸಿದ ಪಠ್ಯ',
     keyWords: 'ಪ್ರಮುಖ ಪದಗಳು',
     signLanguage: 'ಸೈನ್ ಭಾಷೆ',
-    animation: 'ಆನಿಮೇಷನ್',
-    translatedText: 'ಅನುವಾದಿತ ಪಠ್ಯ',
-    sendAnotherMessage: 'ಮತ್ತೊಂದು ಸಂದೇಶವನ್ನು ಕಳುಹಿಸಿ'
+    animation: 'ಆನಿಮೇಷನ್'
   },
   'ml-IN': {
     welcome: 'സ്വാഗതം',
@@ -72,9 +64,7 @@ const translations = {
     textEntered: 'നൽകിയ വാചകം',
     keyWords: 'പ്രധാന വാക്കുകൾ',
     signLanguage: 'സൈൻ ഭാഷ',
-    animation: 'ആനിമേഷൻ',
-    translatedText: 'വിവർത്തനം ചെയ്ത വാചകം',
-    sendAnotherMessage: 'മറ്റൊരു സന്ദേശം അയയ്ക്കുക'
+    animation: 'ആനിമേഷൻ'
   }
 };
 

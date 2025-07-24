@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from auth import create_user, login_user, verify_token, get_db_connection
-from reply_generator import reply_generator
 import os
 import logging
 import sys
@@ -120,26 +119,6 @@ def verify():
         return jsonify({'user': user}), 200
     except Exception as e:
         logger.error(f"Verify token error: {str(e)}")
-        return jsonify({'error': 'Internal server error'}), 500
-
-@app.route('/api/generate-reply', methods=['POST'])
-def generate_reply():
-    try:
-        data = request.get_json()
-        logger.debug(f"Generate reply request data: {data}")
-        
-        if not data or 'text' not in data:
-            logger.error("Missing text in request")
-            return jsonify({'error': 'Missing text field'}), 400
-            
-        text = data['text']
-        reply = reply_generator.generate_reply(text)
-        
-        logger.debug(f"Generated reply: {reply}")
-        return jsonify({'reply': reply}), 200
-        
-    except Exception as e:
-        logger.error(f"Error in generate-reply endpoint: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 def init_app():

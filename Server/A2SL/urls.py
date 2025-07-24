@@ -2,29 +2,40 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from A2SL import views  # assuming views.py is inside A2SL/
-import os  # Add this import for static files configuration
+from A2SL import views
+import os
+import logging
+
+# Set up logging
+logger = logging.getLogger(__name__)
+
+app_name = 'A2SL'
+
+# Log the URL patterns being registered
+logger.info("Registering URL patterns for A2SL app")
+logger.info("Current working directory: %s", os.getcwd())
+logger.info("A2SL app directory: %s", os.path.dirname(os.path.abspath(__file__)))
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # API endpoints
+    path('api/translate/', views.translate_text, name='translate_text'),
+    path('api/get-csrf-token/', views.get_csrf_token, name='get_csrf_token'),
+    path('api/get-animation-words/', views.get_animation_words, name='get_animation_words'),
+    
+    # Regular views
+    path('', views.home_view, name='home'),
     path('about/', views.about_view, name='about'),
     path('contact/', views.contact_view, name='contact'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('signup/', views.signup_view, name='signup'),
     path('animation/', views.animation_view, name='animation'),
-    path('reply/<str:reply_text>/<str:video_name>/', views.reply_view, name='reply_page'),
-    path('', views.home_view, name='home'),
-
-    # 🔄 API for React to get gesture keywords
-    path('api/get-gesture-keywords/', views.get_animation_words),
-    path('get-animation-words/', views.get_animation_words, name='get_animation_words'),
-    path('get-csrf-token/', views.get_csrf_token, name='get_csrf_token'),
-    path('api/text-to-sign-reply/', views.text_to_sign_reply_view, name='text_to_sign_reply'),
-    path('api/get-sign-response/', views.get_sign_response, name='get_sign_response'),
 ]
 
-# Serve static files in development
+# Log the final URL patterns
+logger.info("Registered URL patterns: %s", urlpatterns)
+logger.info("Full URL patterns with app_name: %s", [f"{app_name}:{pattern.name}" for pattern in urlpatterns])
+
+# Serve static files from assets/avatar as /static/ when DEBUG=True
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'avatar'))
+    urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'assets', 'avatar'))
