@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/login', views.api_login, name='api_login'),
     path('api/signup', views.api_signup, name='api_signup'),
     path('api/verify', views.api_verify, name='api_verify'),
+    path('api/animation/', views.animation_view, name='api_animation'),
     
     # Regular views
     path('', views.home_view, name='home'),
