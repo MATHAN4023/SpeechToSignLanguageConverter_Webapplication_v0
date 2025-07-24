@@ -42,6 +42,7 @@ const MainScreen = () => {
   const GEMINI_API_KEY = "AIzaSyDK6GQyvB5xTcV9SP1-xPK4eTizov5IN7M"; // Get from https://makersuite.google.com/app/apikey
   const GEMINI_API_URL =
     "https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Set default language to English on component mount
   useEffect(() => {
@@ -66,7 +67,7 @@ const MainScreen = () => {
           // If username is missing, try to get it from the server
           if (!parsedUser.username && token) {
             console.log("Username missing, fetching from server");
-            fetch("http://localhost:5000/api/verify", {
+            fetch(`${API_URL}/api/verify`, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -103,12 +104,9 @@ const MainScreen = () => {
     // Get CSRF token from Django
     const fetchCsrfToken = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8000/api/get-csrf-token/",
-          {
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${API_URL}/api/get-csrf-token/`, {
+          credentials: "include",
+        });
         const data = await response.json();
         console.log("CSRF token received:", data);
         setCsrfToken(data.csrfToken);
@@ -125,12 +123,9 @@ const MainScreen = () => {
     try {
       // Ensure we have a CSRF token
       if (!csrfToken) {
-        const tokenResponse = await fetch(
-          "http://localhost:8000/api/get-csrf-token/",
-          {
-            credentials: "include",
-          }
-        );
+        const tokenResponse = await fetch(`${API_URL}/api/get-csrf-token/`, {
+          credentials: "include",
+        });
         const tokenData = await tokenResponse.json();
         setCsrfToken(tokenData.csrfToken);
       }
@@ -142,7 +137,7 @@ const MainScreen = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:8000/animation/", {
+      const response = await fetch(`${API_URL}/animation/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -206,7 +201,7 @@ const MainScreen = () => {
     const videoPlayer = document.getElementById("videoPlayer");
     const videoSources = videoSequence.map((item) => {
       const encoded = encodeURIComponent(item);
-      return `http://localhost:8000/static/${encoded}.mp4`;
+      return `${API_URL}/static/${encoded}.mp4`;
     });
     let currentIndex = 0;
 
@@ -248,18 +243,15 @@ const MainScreen = () => {
       // First, get the CSRF token if we don't have it
       if (!csrfToken) {
         console.log("Fetching CSRF token...");
-        const tokenResponse = await fetch(
-          "http://localhost:8000/api/get-csrf-token/",
-          {
-            credentials: "include",
-          }
-        );
+        const tokenResponse = await fetch(`${API_URL}/api/get-csrf-token/`, {
+          credentials: "include",
+        });
         const tokenData = await tokenResponse.json();
         console.log("CSRF token received:", tokenData);
         setCsrfToken(tokenData.csrfToken);
       }
 
-      const apiUrl = "http://localhost:8000/api/translate/";
+      const apiUrl = `${API_URL}/api/translate/`;
       console.log("Making translation request to:", apiUrl);
 
       const response = await fetch(apiUrl, {
@@ -545,18 +537,15 @@ const MainScreen = () => {
     try {
       // Get the animation words
       if (!csrfToken) {
-        const tokenResponse = await fetch(
-          "http://localhost:8000/api/get-csrf-token/",
-          {
-            credentials: "include",
-          }
-        );
+        const tokenResponse = await fetch(`${API_URL}/api/get-csrf-token/`, {
+          credentials: "include",
+        });
         const tokenData = await tokenResponse.json();
         setCsrfToken(tokenData.csrfToken);
       }
 
       const animationResponse = await fetch(
-        "http://localhost:8000/animation/",
+        `${API_URL}/animation/`,
         {
           method: "POST",
           headers: {
@@ -856,19 +845,16 @@ const MainScreen = () => {
         try {
           // Ensure we have a CSRF token
           if (!csrfToken) {
-            const tokenResponse = await fetch(
-              "http://localhost:8000/api/get-csrf-token/",
-              {
-                credentials: "include",
-              }
-            );
+            const tokenResponse = await fetch(`${API_URL}/api/get-csrf-token/`, {
+              credentials: "include",
+            });
             const tokenData = await tokenResponse.json();
             setCsrfToken(tokenData.csrfToken);
           }
 
           // Get the animation words for the response
           const animationResponse = await fetch(
-            "http://localhost:8000/animation/",
+            `${API_URL}/animation/`,
             {
               method: "POST",
               headers: {

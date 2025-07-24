@@ -23,7 +23,8 @@ function App() {
       if (token) {
         try {
           console.log('Verifying token...')
-          const response = await fetch('http://localhost:5000/api/verify', {
+          const API_URL = import.meta.env.VITE_API_URL;
+          const response = await fetch(`${API_URL}/api/verify`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -60,7 +61,8 @@ function App() {
 
   useEffect(() => {
     // Get CSRF token from Django
-    fetch('http://localhost:8000/get-csrf-token/', {
+    const API_URL = import.meta.env.VITE_API_URL;
+    fetch(`${API_URL}/get-csrf-token/`, {
       credentials: 'include',
     })
       .then(response => response.json())
@@ -71,7 +73,8 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:8000/animation/', {
+      const API_URL = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${API_URL}/animation/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -109,7 +112,8 @@ function App() {
     const videoSources = words.map(word => {
       // Handle words with spaces and special characters
       const encodedWord = encodeURIComponent(word)
-      return `http://localhost:8000/static/${encodedWord}.mp4`
+      const API_URL = import.meta.env.VITE_API_URL;
+      return `${API_URL}/static/${encodedWord}.mp4`
     })
     let currentIndex = 0
 

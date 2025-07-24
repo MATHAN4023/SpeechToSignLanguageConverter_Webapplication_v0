@@ -11,12 +11,13 @@ const ResponsePage = () => {
   const [keywords, setKeywords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [csrfToken, setCsrfToken] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Fetch CSRF token on mount
   React.useEffect(() => {
     const fetchCsrf = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/get-csrf-token/", {
+        const res = await fetch(`${API_URL}/api/get-csrf-token/`, {
           credentials: "include"
         });
         const data = await res.json();
@@ -35,7 +36,7 @@ const ResponsePage = () => {
 
     try {
       // Fetch keywords from backend
-      const res = await fetch("http://localhost:8000/animation/", {
+      const res = await fetch(`${API_URL}/animation/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -64,7 +65,7 @@ const ResponsePage = () => {
           return;
         }
         const encodedWord = encodeURIComponent(extracted[currentIndex]);
-        const videoUrl = `http://localhost:8000/static/${encodedWord}.mp4`;
+        const videoUrl = `${API_URL}/static/${encodedWord}.mp4`;
         console.log("Trying to play video:", videoUrl);
         videoRef.current.src = videoUrl;
         videoRef.current.onended = () => {
