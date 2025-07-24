@@ -36,7 +36,7 @@ const ResponsePage = () => {
 
     try {
       // Fetch keywords from backend
-      const res = await fetch(`${API_URL}/animation/`, {
+      const res = await fetch(`${API_URL}/api/animation/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

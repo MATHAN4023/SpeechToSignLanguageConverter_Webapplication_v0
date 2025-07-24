@@ -62,7 +62,7 @@ function App() {
   useEffect(() => {
     // Get CSRF token from Django
     const API_URL = import.meta.env.VITE_API_URL;
-    fetch(`${API_URL}/get-csrf-token/`, {
+    fetch(`${API_URL}/api/get-csrf-token/`, {
       credentials: 'include',
     })
       .then(response => response.json())
@@ -74,7 +74,7 @@ function App() {
     e.preventDefault()
     try {
       const API_URL = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${API_URL}/animation/`, {
+      const response = await fetch(`${API_URL}/api/animation/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

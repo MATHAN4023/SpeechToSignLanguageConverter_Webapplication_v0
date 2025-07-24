@@ -137,7 +137,7 @@ const MainScreen = () => {
         return;
       }
 
-      const response = await fetch(`${API_URL}/animation/`, {
+      const response = await fetch(`${API_URL}/api/animation/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -545,7 +545,7 @@ const MainScreen = () => {
       }
 
       const animationResponse = await fetch(
-        `${API_URL}/animation/`,
+        `${API_URL}/api/animation/`,
         {
           method: "POST",
           headers: {
@@ -854,7 +854,7 @@ const MainScreen = () => {
 
           // Get the animation words for the response
           const animationResponse = await fetch(
-            `${API_URL}/animation/`,
+            `${API_URL}/api/animation/`,
             {
               method: "POST",
               headers: {
