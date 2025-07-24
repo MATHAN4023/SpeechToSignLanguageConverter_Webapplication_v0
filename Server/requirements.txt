@@ -43,3 +43,4 @@ black==23.7.0
 flake8==6.1.0
 
 djangorestframework
+djangorestframework-simplejwt

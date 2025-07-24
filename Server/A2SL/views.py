@@ -16,6 +16,7 @@ from .translation_service import translation_service
 import logging
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
 
 logger = logging.getLogger(__name__)
 
@@ -303,7 +304,12 @@ def api_login(request):
         user_auth = authenticate(username=user.username, password=password)
         if user_auth is not None:
             login(request, user_auth)
-            return JsonResponse({'success': True, 'user': {'username': user.username, 'email': user.email}})
+            # Generate JWT token
+            refresh = RefreshToken.for_user(user_auth)
+            return JsonResponse({
+                'token': str(refresh.access_token),
+                'user': {'username': user.username, 'email': user.email}
+            })
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=401)
     except Exception as e:
