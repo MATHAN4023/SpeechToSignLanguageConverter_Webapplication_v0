@@ -17,6 +17,7 @@ import logging
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
 
 logger = logging.getLogger(__name__)
 
@@ -314,3 +315,18 @@ def api_login(request):
             return JsonResponse({'error': 'Invalid credentials'}, status=401)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def api_verify(request):
+    auth_header = request.headers.get('Authorization')
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return JsonResponse({'error': 'No token provided'}, status=401)
+    token = auth_header.split(' ')[1]
+    try:
+        access_token = AccessToken(token)
+        user_id = access_token['user_id']
+        user = User.objects.get(id=user_id)
+        return JsonResponse({'user': {'username': user.username, 'email': user.email}})
+    except Exception as e:
+        return JsonResponse({'error': 'Invalid token'}, status=401)
