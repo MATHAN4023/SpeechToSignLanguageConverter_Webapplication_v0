@@ -43,3 +43,4 @@ logger.info("Full URL patterns with app_name: %s", [f"{app_name}:{pattern.name}"
 # Serve static files from assets/avatar as /static/ when DEBUG=True
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'assets', 'avatar'))
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
