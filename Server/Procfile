@@ -1,1 +1,1 @@
-web: python download_nltk_data.py && gunicorn A2SL.wsgi 
+web: export NLTK_DATA=$(pwd)/Server/nltk_data && python Server/download_nltk_data.py && gunicorn A2SL.wsgi 
