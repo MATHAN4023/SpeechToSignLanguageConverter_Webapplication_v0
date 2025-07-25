@@ -19,7 +19,9 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
 import os
-nltk_data_dir = os.path.join(os.path.dirname(__file__), "../nltk_data")
+import nltk
+nltk_data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../nltk_data"))
+print("Using NLTK data path:", nltk_data_dir)
 nltk.data.path.append(nltk_data_dir)
 
 logger = logging.getLogger(__name__)
