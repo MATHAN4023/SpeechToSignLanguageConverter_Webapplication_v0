@@ -18,8 +18,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
+import os
 
 logger = logging.getLogger(__name__)
+
+nltk_data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../nltk_data"))
+nltk.data.path.append(nltk_data_dir)
 
 def home_view(request):
 	return render(request,'home.html')
