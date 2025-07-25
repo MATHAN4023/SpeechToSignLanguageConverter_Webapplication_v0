@@ -65,7 +65,7 @@ const ResponsePage = () => {
           return;
         }
         const encodedWord = encodeURIComponent(extracted[currentIndex]);
-        const videoUrl = `${API_URL}/static/${encodedWord}.mp4`;
+        const videoUrl = `/videos/${encodedWord}.mp4`;
         console.log("Trying to play video:", videoUrl);
         videoRef.current.src = videoUrl;
         videoRef.current.onended = () => {

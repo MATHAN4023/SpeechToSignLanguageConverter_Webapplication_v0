@@ -112,8 +112,7 @@ function App() {
     const videoSources = words.map(word => {
       // Handle words with spaces and special characters
       const encodedWord = encodeURIComponent(word)
-      const API_URL = import.meta.env.VITE_API_URL;
-      return `${API_URL}/static/${encodedWord}.mp4`
+      return `/videos/${encodedWord}.mp4`
     })
     let currentIndex = 0
 

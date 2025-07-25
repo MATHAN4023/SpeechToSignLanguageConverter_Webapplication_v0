@@ -201,7 +201,7 @@ const MainScreen = () => {
     const videoPlayer = document.getElementById("videoPlayer");
     const videoSources = videoSequence.map((item) => {
       const encoded = encodeURIComponent(item);
-      return `${API_URL}/static/${encoded}.mp4`;
+      return `/videos/${encoded}.mp4`;
     });
     let currentIndex = 0;
 
