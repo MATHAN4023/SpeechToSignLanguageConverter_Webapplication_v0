@@ -32,6 +32,7 @@ def about_view(request):
 def contact_view(request):
 	return render(request,'contact.html')
 
+@csrf_exempt
 def animation_view(request):
 	if request.method == 'POST':
 		try:
